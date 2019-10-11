@@ -48,12 +48,26 @@ function createGrid() {
     const gridCell = document.createElement('div');
     gridCell.classList.add('grid-cell');
     gridCell.dataset.number = cell;
+    gridCell.style.color = getRandomColor();
+	
+	if(cell % 3 === 0 && cell % 2 !== 0) gridCell.style.fontSize = '10px';
+    if(cell % 2 === 0 && cell % 3 !== 0) gridCell.style.fontSize = '24px';
+	
     gridCell.appendChild(document.createTextNode(cell));
     grid.appendChild(gridCell);
   });
   
   
   game.appendChild(grid);
+}
+
+function getRandomColor() {
+  var letters = '0123456789ABCDEF';
+  var color = '#';
+  for (var i = 0; i < 6; i++) {
+    color += letters[Math.floor(Math.random() * 16)];
+  }
+  return color;
 }
 
 function shuffleArray(array) {
