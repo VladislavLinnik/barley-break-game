@@ -1,12 +1,14 @@
 let numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16];
 const game = document.querySelector('.game');
+const timer = document.querySelector('.time');
 const result = [];
-let counter;
+let time = 60;
+let counter, interval;
 
 numbers = shuffleArray(numbers);
+timer.textContent = time;
 
-
-initializeGame();
+createGrid();
 document.querySelector('.js-startBtn').addEventListener('click', initializeGame);
 
                                                         
@@ -25,19 +27,34 @@ document.onclick = function(event) {
   
   if (result.length === numbers.length) finishGame();
 }
+
+
                                                         
                                                         
 function initializeGame() {
+  time = 60;
   game.innerHTML = null;
+  timer.textContent = time;
   counter = 1;
   result.length = 0;
   numbers = shuffleArray(numbers);
   createGrid();
+  
+  interval = setInterval(function() {
+    time--;
+	timer.textContent = time;
+	
+    if (time == 0) {
+        clearInterval(interval);
+		alert('Time is over');
+		time = 60;
+    }
+	}, 1000);
 }
 
 function finishGame() {
   alert('Game has been finished');
-  initializeGame();
+  clearInterval(interval);
 }
 
 function createGrid() {
